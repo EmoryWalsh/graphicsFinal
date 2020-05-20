@@ -8,4 +8,4 @@
 
 ### Creating Object Mesh ###
 - Parse .obj files for triangles and quadrilateral faces
-- syntax: ``` mesh <obj file name>
+- syntax: ``` mesh <obj file name> ```
