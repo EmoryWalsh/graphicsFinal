@@ -2,7 +2,7 @@
 ## Features
 ### New Primitive Shapes ###
 - Stars
-  - syntax: ``` star cx cy cz rh rd ```
+  - syntax: ``` star cx cy cz ro ri ```
 - Triangular Prism
   - syntax: ``` triprism x1 y1 x2 y2 x3 y3 z1 z2 ```
 

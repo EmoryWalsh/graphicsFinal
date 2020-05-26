@@ -29,7 +29,6 @@ def scanline_convert(polygons, i, screen, zbuffer, color):
   points = [ (polygons[i][0], polygons[i][1], polygons[i][2]),
              (polygons[i+1][0], polygons[i+1][1], polygons[i+1][2]),
              (polygons[i+2][0], polygons[i+2][1], polygons[i+2][2]) ]
-  print("Scanning")
   # alas random color, we hardly knew ye
   #color = [0,0,0]
   #color[RED] = (23*(i/3)) %256
@@ -77,7 +76,6 @@ def add_polygon( polygons, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
   add_point(polygons, x2, y2, z2)
 
 def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, reflect):
-  print("drawing")
   if len(polygons) < 2:
       print('Need at least 3 points to draw')
       return
@@ -86,10 +84,8 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, ref
   while point < len(polygons) - 2:
 
       normal = calculate_normal(polygons, point)[:]
-      print(normal)
       #print normal
       if normal[2] > 0:
-          print("Nomr")
           color = get_lighting(normal, view, ambient, light, symbols, reflect )
           scanline_convert(polygons, point, screen, zbuffer, color)
 
@@ -145,7 +141,6 @@ def add_box( polygons, x, y, z, width, height, depth ):
   add_polygon(polygons, x, y1, z, x, y1, z1, x1, y1, z1)
 
 def add_star(polygons, cx, cy, cz, ro, ri):
-  print("HERE making star")
   s1 = (.25 * math.sqrt(10 + 2 * math.sqrt(5)))
   s2 = (.25 * math.sqrt(10 - 2 * math.sqrt(5)))
   c1 = (.25 * (math.sqrt(5) - 1))
