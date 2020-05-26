@@ -1,0 +1,4 @@
+push
+move 250 250 0
+star 0 0 0 50 30
+save new.png
