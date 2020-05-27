@@ -19,7 +19,6 @@ from draw import *
   with the name being used.
   ==================== """
 def first_pass( commands ):
-
     name = ''
     num_frames = 1
     varyCmd = False
@@ -135,8 +134,8 @@ def run(filename):
         coords1 = []
 
         for command in commands:
-            print(command)
             c = command['op']
+            print(c)
             args = command['args']
             knob_value = 1
 
@@ -165,6 +164,15 @@ def run(filename):
                     reflect = command['constants']
                 add_sphere(tmp,
                            args[0], args[1], args[2], args[3], step_3d)
+                matrix_mult( stack[-1], tmp )
+                draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
+                tmp = []
+                reflect = '.white'
+            elif c == 'triprism':
+                if command['constants']:
+                    reflect = command['constants']
+                add_triprism(tmp,
+                          args[0], args[1], args[2], args[3], args[4], args[5])
                 matrix_mult( stack[-1], tmp )
                 draw_polygons(tmp, screen, zbuffer, view, ambient, light, symbols, reflect)
                 tmp = []

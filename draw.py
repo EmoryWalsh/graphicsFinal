@@ -84,7 +84,7 @@ def draw_polygons( polygons, screen, zbuffer, view, ambient, light, symbols, ref
   while point < len(polygons) - 2:
 
       normal = calculate_normal(polygons, point)[:]
-      #print normal
+      print normal
       if normal[2] > 0:
           color = get_lighting(normal, view, ambient, light, symbols, reflect )
           scanline_convert(polygons, point, screen, zbuffer, color)
@@ -139,6 +139,27 @@ def add_box( polygons, x, y, z, width, height, depth ):
   #bottom
   add_polygon(polygons, x, y1, z, x1, y1, z1, x1, y1, z)
   add_polygon(polygons, x, y1, z, x, y1, z1, x1, y1, z1)
+
+def add_triprism( polygons, x, y, z, xl, yl, zl ):
+
+  #front
+  add_polygon(polygons, x, y, z, x + xl, y, z, x, y + yl, z)
+
+  #back
+  add_polygon(polygons, x, y, z + zl, x, y + yl, z + zl, x + xl, y, z + zl)
+
+  #left side
+  add_polygon(polygons, x, y, z, x, y + yl, z , x, y + yl, z + zl)
+  add_polygon(polygons, x, y, z, x, y + yl, z + zl, x, y, z + zl)
+
+  #top
+  add_polygon(polygons, x, y + yl, z, x + xl, y, z, x, y + yl, z + zl)
+  add_polygon(polygons, x + xl, y, z, x + xl, y, x + zl, x, y + yl, z + zl)
+
+  #bottom
+  add_polygon(polygons, x, y, z, x, y, z + zl, x + xl, y, z)
+  add_polygon(polygons, x + xl, y, z, x, y, z + zl, x + xl, y, z + zl)
+
 
 def add_star(polygons, cx, cy, cz, ro, ri):
   s1 = (.25 * math.sqrt(10 + 2 * math.sqrt(5)))

@@ -13,6 +13,7 @@ tokens = (
     "CAMERA",
     "AMBIENT",
     "TORUS",
+    "TRIPRISM",
     "SPHERE",
     "STAR",
     "BOX",
@@ -53,6 +54,7 @@ reserved = {
     "camera" : "CAMERA",
     "ambient" : "AMBIENT",
     "torus" : "TORUS",
+    "triprism" : "TRIPRISM",
     "sphere" : "SPHERE",
     "star" : "STAR",
     "box" : "BOX",
@@ -198,6 +200,22 @@ def p_command_star(p):
     cmd['args'] = p[arg_start:arg_start+5]
     commands.append(cmd)
 
+def p_command_triprism(p):
+    """command : TRIPRISM NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
+               | TRIPRISM NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL
+               | TRIPRISM SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER
+               | TRIPRISM SYMBOL NUMBER NUMBER NUMBER NUMBER NUMBER NUMBER SYMBOL"""
+    cmd = {'op' : p[1], 'constants' : None, 'cs' : None, 'args':[]}
+    arg_start = 2
+    if isinstance(p[2], str):
+        cmd['constants'] = p[2]
+        arg_start = 3
+    if len(p) == 8 and isinstance(p[7], str):
+        cmd['cs'] = p[7]
+    if len(p) == 9 and isinstance(p[8], str):
+          cmd['cs'] = p[8]
+    cmd['args'] = p[arg_start:arg_start+6]
+    commands.append(cmd)
 
 def p_command_torus(p):
     """command : TORUS NUMBER NUMBER NUMBER NUMBER NUMBER
@@ -421,6 +439,7 @@ def parseFile(filename):
         f = open(filename, "r")
         for line in f.readlines():
             line = line.strip()
+            print(line)
             yacc.parse(line)
         f.close()
         result = (commands[:], deepcopy(symbols))
